@@ -1,0 +1,43 @@
+{
+  "config": {
+    "prefered-install": "source",
+    "optimize-autoloader": true
+  },
+  "name": "typo3/cms-base-distribution",
+  "description" : "TYPO3 CMS Base Distribution",
+  "license": "GPL-2.0+",
+  "require": {
+    "typo3/minimal": "9.0.x-dev",
+    "typo3/cms-extbase": "*",
+    "typo3/cms-fluid": "*",
+    "typo3/cms-info": "*",
+    "typo3/cms-extensionmanager": "*",
+    "typo3/cms-lang": "*",
+    "typo3/cms-setup": "*",
+    "typo3/cms-taskcenter": "*",
+    "typo3/cms-sys-action": "*",
+    "typo3/cms-backend": "*",
+    "typo3/cms-belog": "*",
+    "typo3/cms-beuser": "*",
+    "typo3/cms-filelist": "*",
+    "typo3/cms-fluid-styled-content": "*",
+    "typo3/cms-frontend": "*",
+    "typo3/cms-indexed-search": "*",
+    "typo3/cms-install": "*",
+    "typo3/cms-lowlevel": "*",
+    "typo3/cms-recordlist": "*",
+    "typo3/cms-saltedpasswords": "*",
+    "typo3/cms-tstemplate": "*",
+    "typo3/cms-viewpage": "*",
+    "typo3/cms-rte-ckeditor": "*"
+  },
+  "extra": {
+    "helhum/typo3-console": {
+      "install-binary": false
+    },
+    "typo3/cms": {
+      "cms-package-dir": "{$vendor-dir}/typo3/cms",
+      "web-dir": "web/"
+    }
+  }
+}

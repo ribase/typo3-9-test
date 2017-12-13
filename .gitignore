@@ -1,0 +1,8 @@
+/src/web/index.php
+/src/web/typo3temp/
+
+/src/web/typo3conf/ext/
+/src/web/typo3conf/l10n/
+/src/web/typo3/
+/src/web/fileadmin/
+/src/vendor/
