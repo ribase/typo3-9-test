@@ -1,19 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7e0b142f-7a9b-4fd1-94d4-e2cf8d3c737f" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docker-typo3-9-test/docker-typo3-9-test/apache/Dockerfile" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docker-typo3-9-test/docker-typo3-9-test/apache/apache.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docker-typo3-9-test/docker-typo3-9-test/apache/conf-available/servername.conf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docker-typo3-9-test/docker-typo3-9-test/apache/sites-available/000-default.conf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docker-typo3-9-test/docker-typo3-9-test/apache/sites-available/999-host.conf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docker-typo3-9-test/docker-typo3-9-test/apache/utils/cli-php.ini" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docker-typo3-9-test/docker-typo3-9-test/apache/utils/php.ini" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docker-typo3-9-test/docker-typo3-9-test/docker-compose.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docker-typo3-9-test/docker-typo3-9-test/logs/apache/access.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docker-typo3-9-test/docker-typo3-9-test/logs/apache/error.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docker-typo3-9-test/docker-typo3-9-test/logs/apache/other_vhosts_access.log" />
-    </list>
+    <list default="true" id="7e0b142f-7a9b-4fd1-94d4-e2cf8d3c737f" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -38,7 +26,7 @@
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="120">
-              <caret line="8" column="5" lean-forward="false" selection-start-line="8" selection-start-column="5" selection-end-line="8" selection-end-column="5" />
+              <caret line="8" column="6" lean-forward="true" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -263,12 +251,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1513112811628</updated>
-      <workItem from="1513112814061" duration="2762000" />
+      <workItem from="1513112814061" duration="2794000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2762000" />
+    <option name="totallyTimeSpent" value="2794000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="81" y="27" width="1440" height="873" extended-state="0" />
@@ -369,7 +357,7 @@
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
-          <caret line="8" column="5" lean-forward="false" selection-start-line="8" selection-start-column="5" selection-end-line="8" selection-end-column="5" />
+          <caret line="8" column="6" lean-forward="true" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
           <folding />
         </state>
       </provider>
