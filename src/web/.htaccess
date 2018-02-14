@@ -1,8 +1,27 @@
-#Order deny,allow
-#Deny from all
-#Allow from 82.220.9.178
-# self
-#Allow from 5.148.180.245
+#####
+#
+# Example .htaccess file for TYPO3 CMS - for use with Apache Webserver
+#
+# This file includes settings for the following configuration options:
+#
+# - Compression
+# - Caching
+# - MIME types
+# - Cross Origin requests
+# - Rewriting and Access
+# - Miscellaneous
+# - PHP optimisation
+#
+# If you want to use it, you have to copy it to the root folder of your TYPO3 installation (if its
+# not there already) and rename it to '.htaccess'. To make .htaccess files work, you might need to
+# adjust the 'AllowOverride' directive in your Apache configuration file.
+#
+# IMPORTANT: You may need to change this file depending on your TYPO3 installation!
+#            Consider adding this file's content to your webserver's configuration directly for speed improvement
+#
+# Lots of the options are taken from https://github.com/h5bp/html5-boilerplate/blob/master/dist/.htaccess
+#
+####
 
 
 ### Begin: Compression ###
@@ -14,13 +33,13 @@
 # *) Set $GLOBALS['TYPO3_CONF_VARS']['FE']['compressionLevel'] = 9 together with the TypoScript properties
 #    config.compressJs and config.compressCss for GZIP compression of Frontend JS and CSS files.
 
-<FilesMatch "\.js\.gzip$">
-	AddType "text/javascript" .gzip
-</FilesMatch>
-<FilesMatch "\.css\.gzip$">
-	AddType "text/css" .gzip
-</FilesMatch>
-AddEncoding gzip .gzip
+#<FilesMatch "\.js\.gzip$">
+#	AddType "text/javascript" .gzip
+#</FilesMatch>
+#<FilesMatch "\.css\.gzip$">
+#	AddType "text/css" .gzip
+#</FilesMatch>
+#AddEncoding gzip .gzip
 
 <IfModule mod_deflate.c>
 	# Force compression for mangled `Accept-Encoding` request headers
@@ -31,7 +50,15 @@ AddEncoding gzip .gzip
 		</IfModule>
 	</IfModule>
 
-	# Compress all output labeled with one of the following media types
+	# Compress all output labeled with one of the following media types.
+	#
+	# (!) For Apache versions below version 2.3.7 you don't need to
+	# enable `mod_filter` and can remove the `<IfModule mod_filter.c>`
+	# and `</IfModule>` lines as `AddOutputFilterByType` is still in
+	# the core directives.
+	#
+	# https://httpd.apache.org/docs/current/mod/mod_filter.html#addoutputfilterbytype
+
 	<IfModule mod_filter.c>
 		AddOutputFilterByType DEFLATE application/atom+xml \
 			application/javascript \
@@ -224,37 +251,7 @@ AddDefaultCharset utf-8
 
 ### End: Cross Origin ###
 
-### Begin: Security options ###
 
-<FilesMatch "(?i)changelog(\.txt)?$">
-  deny from all
-</FilesMatch>
-
-<FilesMatch "(?i)(ext_conf_)?(setup|constants|template)\.txt$">
-  deny from all
-</FilesMatch>
-
-<Files "upload.log">
-  deny from all
-</Files>
-
-<FilesMatch "^#">
-  deny from all
-</FilesMatch>
-
-<FilesMatch "~$">
-  deny from all
-</FilesMatch>
-
-<FilesMatch "\.db$">
-  deny from all
-</FilesMatch>
-
-<FilesMatch "^\.">
-  deny from all
-</FilesMatch>
-
-### End: Security options ###
 
 ### Begin: Rewriting and Access ###
 
@@ -269,27 +266,6 @@ AddDefaultCharset utf-8
 	# mod_rewrite in .htaccess files without knowing the RewriteBase
 	RewriteCond $0#%{REQUEST_URI} ([^#]*)#(.*)\1$
 	RewriteRule ^.*$ - [E=CWD:%2]
-	
-	### Begin: Security fix to disable php execution for .php.some.nonexisting.extension
-	RewriteRule \.ph(p\d?|tml|ps)\..*$ - [F]
-	### End: Security fix to disable php execution for .php.some.nonexisting.extension
-	
-	### Begin: Security fix to disable php execution for user contributed folders
-	RewriteRule ^(fileadmin|uploads|typo3temp)/.*\.ph(p\d?|tml|ps)$ - [F]
-	### End: Security fix to disable php execution for user contributed folders
-	
-	### Begin: Security fix for powermail uploads (not needed explicitly with secure_files)
-	RewriteRule ^uploads/tx_powermail/files/ - [F]
-	
-	# Rules to set ApplicationContext based on hostname
-	#RewriteCond %{HTTP_HOST} ^dev\.example\.com$
-	#RewriteRule (.*) $1 [E=TYPO3_CONTEXT:Development]
-	#RewriteCond %{HTTP_HOST} ^staging\.example\.com$
-	#RewriteRule (.*) $1 [E=TYPO3_CONTEXT:Production/Staging]
-	#RewriteCond %{HTTP_HOST} ^www\.example\.com$
-	#RewriteRule (.*) $1 [E=TYPO3_CONTEXT:Production]
-	RewriteCond %{HTTP_HOST} \.cab(v(h|s)|dh)\d+\.nine\.ch$
-	RewriteRule (.*) - [E=TYPO3_CONTEXT:Development]
 
 	# Rules to set ApplicationContext based on hostname
 	#RewriteCond %{HTTP_HOST} ^dev\.example\.com$
@@ -298,19 +274,6 @@ AddDefaultCharset utf-8
 	#RewriteRule .? - [E=TYPO3_CONTEXT:Production/Staging]
 	#RewriteCond %{HTTP_HOST} ^www\.example\.com$
 	#RewriteRule .? - [E=TYPO3_CONTEXT:Production]
-	
-	# Basic security checks
-	# - Restrict access to deleted files in Recycler directories
-	# - Restrict access to TypoScript files in default templates directories
-	# - Restrict access to Private extension directories
-	# For httpd.conf, use these lines instead of the next ones:
-	# RewriteRule ^/TYPO3root/fileadmin/(.*/)?_recycler_/ - [F]
-	# RewriteRule ^/TYPO3root/fileadmin/templates/.*(\.txt|\.ts)$ - [F]
-	# RewriteRule ^/TYPO3root/typo3conf/ext/[^/]+/Resources/Private/ - [F]
-	RewriteRule ^fileadmin/(.*/)?_recycler_/ - [F]
-	RewriteRule ^fileadmin/templates/.*(\.txt|\.ts)$ - [F]
-	RewriteRule ^typo3conf/ext/[^/]+/Resources/Private/ - [F]
-
 
 	# Rule for versioned static files, configured through:
 	# - $GLOBALS['TYPO3_CONF_VARS']['BE']['versionNumberInFilename']
@@ -318,14 +281,13 @@ AddDefaultCharset utf-8
 	# IMPORTANT: This rule has to be the very first RewriteCond in order to work!
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^(.+)\.(\d+)\.(php|js|css|png|jpg|gif|gzip)$ $1.$3 [L]
+	RewriteRule ^(.+)\.(\d+)\.(php|js|css|png|jpg|gif|gzip)$ %{ENV:CWD}$1.$3 [L]
 
 	# Access block for folders
 	RewriteRule _(?:recycler|temp)_/ - [F]
 	RewriteRule fileadmin/templates/.*\.(?:txt|ts)$ - [F]
-	RewriteRule typo3temp/logs/ - [F]
-	RewriteRule ^(vendor|typo3_src) - [F]
-	RewriteRule (?:typo3conf/ext|typo3/sysext|typo3/ext)/[^/]+/(?:Configuration|Resources/Private|Tests?)/ - [F]
+	RewriteRule ^(?:vendor|typo3_src|typo3temp/var) - [F]
+	RewriteRule (?:typo3conf/ext|typo3/sysext|typo3/ext)/[^/]+/(?:Configuration|Resources/Private|Tests?|Documentation|docs?)/ - [F]
 
 	# Block access to all hidden files and directories with the exception of
 	# the visible content from within the `/.well-known/` hidden directory (RFC 5785).
@@ -336,95 +298,7 @@ AddDefaultCharset utf-8
 
 	# Stop rewrite processing, if we are in the typo3/ directory or any other known directory
 	# NOTE: Add your additional local storages here
-	RewriteRule (?:typo3/|fileadmin/|typo3conf/|typo3temp/|uploads/|favicon\.ico) - [L]
-	
-		### Begin: Static File Cache (preparation) ####
-
-	# Document root configuration
-	RewriteRule .* - [E=SFC_ROOT:%{DOCUMENT_ROOT}]
-	# RewriteRule .* - [E=SFC_ROOT:%{DOCUMENT_ROOT}/t3site] # Example if your installation is installed in a directory
-	
-	# Cleanup URI
-	RewriteCond %{REQUEST_URI} ^.*$
-	RewriteRule .* - [E=SFC_URI:/%{REQUEST_URI}]
-	RewriteCond %{REQUEST_URI} ^/.*$
-	RewriteRule .* - [E=SFC_URI:%{REQUEST_URI}]
-	RewriteCond %{REQUEST_URI} ^/?$
-	RewriteRule .* - [E=SFC_URI:/]
-	
-	# Get scheme/protocol
-	RewriteCond %{SERVER_PORT} ^443$
-	RewriteRule .* - [E=SFC_PROTOCOL:https]
-	RewriteCond %{SERVER_PORT} !^443$
-	RewriteRule .* - [E=SFC_PROTOCOL:http]
-	
-	# Set gzip extension into an environment variable if the visitors browser can handle gzipped content.
-	RewriteCond %{HTTP:Accept-Encoding} gzip [NC]
-	RewriteRule .* - [E=SFC_GZIP:.gz]
-	#RewriteRule .* - [E=SFC_GZIP:] # Add this line, to disable the gzip redirect
-	
-	# Check if the requested file exists in the cache, otherwise default to index.html that
-	# set in an environment variable that is used later on
-	RewriteCond %{ENV:SFC_ROOT}/typo3temp/tx_ncstaticfilecache/%{ENV:SFC_PROTOCOL}/%{HTTP_HOST}%{ENV:SFC_URI} !-f
-	RewriteRule .* - [E=SFC_FILE:/index.html]
-	
-	### Begin: Static File Cache (main) ####
-	
-	# We only redirect URI's without query strings
-	RewriteCond %{QUERY_STRING} ^$
-	
-	# It only makes sense to do the other checks if a static file actually exists.
-	RewriteCond %{ENV:SFC_ROOT}/typo3temp/tx_ncstaticfilecache/%{ENV:SFC_PROTOCOL}/%{HTTP_HOST}%{ENV:SFC_URI}%{ENV:SFC_FILE}%{ENV:SFC_GZIP} -f
-	
-	# NO frontend user is logged in. Logged in frontend users may see different
-	# information than anonymous users. But the anonymous version is cached. So
-	# don't show the anonymous version to logged in frontend users.
-	RewriteCond %{HTTP_COOKIE} !nc_staticfilecache [NC]
-	
-	# Uncomment the following line if you use MnoGoSearch
-	#RewriteCond %{HTTP:X-TYPO3-mnogosearch} ^$
-	
-	# We only redirect GET requests
-	RewriteCond %{REQUEST_METHOD} GET
-	
-	# NO backend user is logged in. Please note that the be_typo_user cookie expires at the end of the browser session.
-	# If you have logged out of the TYPO3 backend and are expecting to see cached pages but don't.
-	# Please close this browser session first or remove the cookie manually or use another browser to hit your frontend.
-	RewriteCond %{HTTP_COOKIE} !be_typo_user [NC]
-	
-	# Rewrite the request to the static file.
-	RewriteRule .* typo3temp/tx_ncstaticfilecache/%{ENV:SFC_PROTOCOL}/%{HTTP_HOST}%{ENV:SFC_URI}%{ENV:SFC_FILE}%{ENV:SFC_GZIP} [L]
-	
-	# Do not allow direct call the cache entries
-	RewriteCond %{ENV:SFC_URI} ^/typo3temp/tx_ncstaticfilecache/.*
-	RewriteCond %{ENV:REDIRECT_STATUS} ^$
-	RewriteRule .* - [F,L]
-	
-	### Begin: Static File Cache (options) ####
-	
-	# Set proper content type and encoding for gzipped html.
-	<FilesMatch "\.gz">
-	   <IfModule mod_headers.c>
-		  Header set Content-Encoding gzip
-	   </IfModule>
-	</FilesMatch>
-	
-	# if there are same problems with ForceType, please try the AddType alternative
-	# Set proper content type gzipped html
-	<FilesMatch "\.html\.gz">
-	   ForceType text/html
-	   # AddType "text/html" .gz
-	</FilesMatch>
-	<FilesMatch "\.xml\.gz">
-	   ForceType text/xml
-	   # AddType "text/xml" .gz
-	</FilesMatch>
-	<FilesMatch "\.rss\.gz">
-	   ForceType text/xml
-	   # AddType "text/xml" .gz
-	</FilesMatch>
-	
-	### End: Static File Cache ###
+	RewriteRule ^(?:typo3/|fileadmin/|typo3conf/|typo3temp/|uploads/|favicon\.ico) - [L]
 
 	# If the file/symlink/directory does not exist => Redirect to index.php.
 	# For httpd.conf, you need to prefix each '%{REQUEST_FILENAME}' with '%{DOCUMENT_ROOT}'.
@@ -436,7 +310,7 @@ AddDefaultCharset utf-8
 </IfModule>
 
 # Access block for files
-<FilesMatch "(?i:^\.|^#.*#|^(?:ChangeLog|ToDo|Readme|License)(?:\.md|\.txt)?|^composer\.(?:json|lock)|^ext_conf_template\.txt|^ext_typoscript_constants\.txt|^ext_typoscript_setup\.txt|flexform[^.]*\.xml|locallang[^.]*\.(?:xml|xlf)|\.(?:bak|co?nf|cfg|ya?ml|ts|dist|fla|in[ci]|log|sh|sql(?:\..*)?|sw[op]|git.*)|.*(?:~|rc))$">
+<FilesMatch "(?i:^\.|^#.*#|^(?:ChangeLog|ToDo|Readme|License)(?:\.md|\.txt)?|^composer\.(?:json|lock)|^ext_conf_template\.txt|^ext_typoscript_constants\.txt|^ext_typoscript_setup\.txt|flexform[^.]*\.xml|locallang[^.]*\.(?:xml|xlf)|\.(?:bak|co?nf|cfg|ya?ml|ts|typoscript|dist|fla|in[ci]|log|sh|sql(?:\..*)?|sw[op]|git.*)|.*(?:~|rc))$">
 	# Apache < 2.3
 	<IfModule !mod_authz_core.c>
 		Order allow,deny

@@ -7,7 +7,7 @@
   "description" : "TYPO3 CMS Base Distribution",
   "license": "GPL-2.0+",
   "require": {
-    "typo3/minimal": "9.0.x-dev",
+    "typo3/minimal": "^9.1",
     "typo3/cms-extbase": "*",
     "typo3/cms-fluid": "*",
     "typo3/cms-info": "*",
